@@ -31,15 +31,18 @@ Contexte : une SARL montée à cinq associés pour reprendre un gros stock et le
 3. **Solde dû** : montant facturé moins encaissé, avec le retard en jours.
 
 
-## Les documents que je produisais
+## Le dossier d'expédition, pièce par pièce
 
-Le classeur n'était qu'une moitié du travail. L'autre, c'étaient les documents commerciaux et douaniers, rédigés un par un avant chaque départ.
+Un envoi, ce n'est pas une facture. C'est une chaîne de quatre documents qui doivent se répondre au chiffre près.
 
-[Voir le modèle de facture export (PDF)](documents/modele-facture-export.pdf)
+[Ouvrir le dossier complet (PDF, 4 pages)](documents/dossier-expedition.pdf)
 
-![Modèle de facture export](documents/modele-facture-export.png)
+1. **Facture export** — désignation bilingue, poids net, quantité, prix unitaire, montant, puis EXW, fret et total.
+2. **Colisage** — ce qui était commandé, ce qui est réellement parti, et l'écart assumé : sept palettes restées à quai, quarante-deux receveurs non disponibles.
+3. **Reçu de commande** — la confrontation vendeur / acheteur, avec les échéances et les lignes en attente, signée des deux côtés.
+4. **Avoir** — la contrepartie financière des lignes non expédiées, valorisées au prix de la facture d'origine.
 
-En-tête expéditeur avec mentions légales, adresse de livraison et de facturation du consignataire, informations de fret, lignes de marchandises avec poids net, quantité, prix unitaire et montant, totaux, incoterm, conditions de paiement, clause d'exonération de TVA et signature.
+C'est cette cohérence que je tenais : le colisage justifie la facture, le reçu de commande justifie l'écart, l'avoir solde l'écart.
 
 ## Comment l'ouvrir
 
