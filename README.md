@@ -1,5 +1,7 @@
 # Suivi export — conteneurs de sanitaire
 
+![Tableau de bord du suivi export](assets/export-conteneurs.png)
+
 Un classeur de pilotage export pour l'écoulement d'un stock de baignoires, receveurs et robinetterie (Jacob Delafon) revendu à l'export, en Afrique de l'Ouest.
 
 Contexte : une SARL montée à cinq associés pour reprendre un gros stock et le revendre. J'ai pris en charge tout le processus export, de l'usine à la réception client : plan de chargement, volumétrie, dossier douanier, transitaire, suivi et encaissement.
