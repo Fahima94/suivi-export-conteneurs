@@ -30,6 +30,17 @@ Contexte : une SARL montée à cinq associés pour reprendre un gros stock et le
 2. **Valeur en douane** : FOB + fret + assurance.
 3. **Solde dû** : montant facturé moins encaissé, avec le retard en jours.
 
+
+## Les documents que je produisais
+
+Le classeur n'était qu'une moitié du travail. L'autre, c'étaient les documents commerciaux et douaniers, rédigés un par un avant chaque départ.
+
+[Voir le modèle de facture export (PDF)](documents/modele-facture-export.pdf)
+
+![Modèle de facture export](documents/modele-facture-export.png)
+
+En-tête expéditeur avec mentions légales, adresse de livraison et de facturation du consignataire, informations de fret, lignes de marchandises avec poids net, quantité, prix unitaire et montant, totaux, incoterm, conditions de paiement, clause d'exonération de TVA et signature.
+
 ## Comment l'ouvrir
 
 Télécharger `Suivi-export-conteneurs-sanitaire.xlsx` et l'ouvrir dans Excel, LibreOffice ou Google Sheets.
