@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suivi des expéditions — démonstration</title>
+<style>
+:root{--ink:#0f2b3d;--slate:#0f3d5c;--soft:#eef3f7;--line:#d5e0e8;--ok:#1f7a5c;--warn:#b4622a;--bad:#a8324a}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#f6f8fa}
+header{background:var(--slate);color:#fff;padding:22px 28px}
+header h1{margin:0;font-size:20px}
+header p{margin:6px 0 0;font-size:13px;opacity:.85}
+.wrap{max-width:1080px;margin:0 auto;padding:22px 20px 60px}
+.note{background:#fff6e8;border:1px solid #f0d9b5;color:#7a4b13;font-size:12.5px;padding:9px 12px;border-radius:8px;margin-bottom:18px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:20px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi span{display:block;font-size:12px;color:#5b7284;text-transform:uppercase;letter-spacing:.4px}
+.kpi strong{display:block;font-size:24px;margin-top:6px}
+.controls{display:flex;gap:10px;margin:0 0 14px;flex-wrap:wrap}
+select,button,input{font:inherit;font-size:13px;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+button{cursor:pointer}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px}
+.card h3{margin:0 0 4px;font-size:15px}
+.card .ref{font-size:12px;color:#68849a;margin-bottom:10px}
+.steps{display:flex;gap:4px;margin:12px 0 10px}
+.steps i{flex:1;height:6px;border-radius:3px;background:#e6edf3}
+.steps i.on{background:var(--slate)}
+.steps i.done{background:var(--ok)}
+.docs{list-style:none;padding:0;margin:10px 0 0;font-size:12.5px}
+.docs li{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed #e7eef3}
+.docs li:last-child{border:none}
+.ok{color:var(--ok);font-weight:600}
+.miss{color:var(--warn);font-weight:600}
+.row{display:flex;justify-content:space-between;font-size:12.5px;color:#4a6273;margin-top:10px}
+.status{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:20px;background:var(--soft);color:var(--slate)}
+footer{margin-top:26px;font-size:12px;color:#6b8195}
+</style>
+</head>
+<body>
+<header>
+<h1>Suivi des expéditions export</h1>
+<p>12 à 15 conteneurs par an — jalons, documents et marge par dossier</p>
+</header>
+<div class="wrap">
+<p class="note">Démonstration sur données fictives : transporteurs, numéros de conteneur et clients ont été remplacés. Les filtres, les jalons et le contrôle des pièces fonctionnent.</p>
+
+<div class="kpis">
+  <div class="kpi"><span>Dossiers ouverts</span><strong id="k1">8</strong></div>
+  <div class="kpi"><span>Pièces manquantes</span><strong id="k2">5</strong></div>
+  <div class="kpi"><span>Marge moyenne</span><strong id="k3">18,6 %</strong></div>
+  <div class="kpi"><span>Départs cette semaine</span><strong id="k4">2</strong></div>
+</div>
+
+<div class="controls">
+  <select id="filtre">
+    <option value="">Tous les dossiers</option>
+    <option>En attente de pièces</option>
+    <option>Prêt au départ</option>
+    <option>En mer</option>
+    <option>Livré</option>
+  </select>
+  <input id="q" placeholder="Rechercher un client ou un port">
+  <button id="reset">Réinitialiser</button>
+</div>
+
+<div class="cards" id="cards"></div>
+
+<footer>Fahima Behillil · maquette reconstituée à partir du suivi utilisé chez Alfa Distribution · <a href="https://fahima94.github.io/portfolio/" style="color:var(--slate)">portfolio</a></footer>
+</div>
+
+<script>
+const JALONS=["Réservation","Empotage","Douane","Départ","Arrivée"];
+const dossiers=[
+ {client:"Client A — Hygiène",ref:"ALF-2411",port:"Lomé",etape:3,statut:"En mer",marge:19.8,pieces:[["Facture pro forma",1],["Liste de colisage",1],["Certificat d'origine",1],["Valeur en douane",1],["Assurance",0]]},
+ {client:"Client B — Textile",ref:"ALF-2412",port:"Cotonou",etape:2,statut:"En attente de pièces",marge:16.4,pieces:[["Facture pro forma",1],["Liste de colisage",1],["Certificat d'origine",0],["Valeur en douane",1],["Assurance",0]]},
+ {client:"Client C — Mobilier",ref:"ALF-2413",port:"Abidjan",etape:4,statut:"Livré",marge:21.2,pieces:[["Facture pro forma",1],["Liste de colisage",1],["Certificat d'origine",1],["Valeur en douane",1],["Assurance",1]]},
+ {client:"Client D — Agroalimentaire",ref:"ALF-2414",port:"Dakar",etape:3,statut:"En mer",marge:17.1,pieces:[["Facture pro forma",1],["Liste de colisage",1],["Certificat d'origine",1],["Valeur en douane",1],["Assurance",1]]},
+ {client:"Client E — Cosmétique",ref:"ALF-2415",port:"Tema",etape:1,statut:"En attente de pièces",marge:14.9,pieces:[["Facture pro forma",1],["Liste de colisage",0],["Certificat d'origine",0],["Valeur en douane",0],["Assurance",0]]},
+ {client:"Client F — Quincaillerie",ref:"ALF-2416",port:"Lomé",etape:2,statut:"Prêt au départ",marge:20.3,pieces:[["Facture pro forma",1],["Liste de colisage",1],["Certificat d'origine",1],["Valeur en douane",1],["Assurance",1]]},
+ {client:"Client G — Pièces auto",ref:"ALF-2417",port:"Douala",etape:4,statut:"Livré",marge:22.6,pieces:[["Facture pro forma",1],["Liste de colisage",1],["Certificat d'origine",1],["Valeur en douane",1],["Assurance",1]]},
+ {client:"Client H — Emballage",ref:"ALF-2418",port:"Cotonou",etape:0,statut:"En attente de pièces",marge:15.7,pieces:[["Facture pro forma",0],["Liste de colisage",0],["Certificat d'origine",0],["Valeur en douane",0],["Assurance",0]]}
+];
+function render(){
+ const f=document.getElementById("filtre").value, q=(document.getElementById("q").value||"").toLowerCase();
+ const list=dossiers.filter(d=>(!f||d.statut===f)&&(!q||(d.client+" "+d.port).toLowerCase().includes(q)));
+ document.getElementById("cards").innerHTML=list.map(d=>{
+  const steps=JALONS.map((j,i)=>`<i class="${i<d.etape?'done':i===d.etape?'on':''}" title="${j}"></i>`).join("");
+  const docs=d.pieces.map(p=>`<li><span>${p[0]}</span><span class="${p[1]?'ok':'miss'}">${p[1]?'reçue':'manquante'}</span></li>`).join("");
+  return `<div class="card"><h3>${d.client}</h3><div class="ref">${d.ref} · ${d.port}</div>
+   <span class="status">${d.statut}</span>
+   <div class="steps">${steps}</div>
+   <div class="row"><span>${JALONS[d.etape]}</span><span>Marge ${d.marge.toFixed(1).replace(".",",")} %</span></div>
+   <ul class="docs">${docs}</ul></div>`}).join("");
+ document.getElementById("k1").textContent=list.filter(d=>d.statut!=="Livré").length;
+ document.getElementById("k2").textContent=list.reduce((s,d)=>s+d.pieces.filter(p=>!p[1]).length,0);
+ document.getElementById("k3").textContent=(list.length?list.reduce((s,d)=>s+d.marge,0)/list.length:0).toFixed(1).replace(".",",")+" %";
+ document.getElementById("k4").textContent=list.filter(d=>d.statut==="Prêt au départ").length;
+}
+document.getElementById("filtre").onchange=render;
+document.getElementById("q").oninput=render;
+document.getElementById("reset").onclick=()=>{document.getElementById("filtre").value="";document.getElementById("q").value="";render()};
+render();
+</script>
+</body>
+</html>
